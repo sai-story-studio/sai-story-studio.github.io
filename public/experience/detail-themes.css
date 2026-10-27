@@ -1,0 +1,235 @@
+/* These motifs are decorative, not a calculated constellation or natal chart. */
+.reading-detail-dialog {
+  --detail-theme-art: url('./assets/detail-zodiac-sky.svg');
+  --detail-theme-paper: #f5f3fa;
+  --detail-theme-wash: #f5f3fa80;
+  --detail-theme-ink: #695879;
+  --detail-theme-line: #ddd4e7;
+  background-color: var(--detail-theme-paper);
+  background-image: linear-gradient(var(--detail-theme-wash), var(--detail-theme-wash)), var(--detail-theme-art);
+  background-position: center, center;
+  background-size: cover, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+.reading-detail-dialog[data-reading-mode='saju'] {
+  --detail-theme-art: url('./assets/detail-saju-elements.svg');
+  --detail-theme-paper: #faf6ef;
+  --detail-theme-wash: #faf6ef80;
+  --detail-theme-ink: #79644e;
+  --detail-theme-line: #e5dacb;
+}
+
+.reading-detail-dialog[data-reading-mode='ziwei'] {
+  --detail-theme-art: url('./assets/detail-ziwei-palaces.svg');
+  --detail-theme-paper: #f4f2fa;
+  --detail-theme-wash: #f4f2fa80;
+  --detail-theme-ink: #6c587e;
+  --detail-theme-line: #ded5ea;
+}
+
+.reading-detail-dialog .reading-detail-sheet {
+  isolation: isolate;
+  background: transparent;
+  padding-top: 57px;
+}
+
+/* The dialog owns one continuous viewport-sized background; long reports never tile. */
+.reading-detail-dialog .reading-detail-sheet::before {
+  content: none;
+  display: none;
+}
+
+.reading-detail-sheet > :not(.dialog-close) {
+  position: relative;
+  z-index: 1;
+}
+
+.reading-detail-dialog .dialog-close {
+  z-index: 3;
+  top: 13px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #ddd5e4;
+  border-radius: 50%;
+  background: #fffefb;
+  color: #75677d;
+  font-size: 25px;
+  box-shadow: 0 2px 8px #44325208;
+}
+
+.reading-detail-dialog .dialog-close:hover {
+  background: #f0eaf5;
+  color: #5e4770;
+}
+
+.reading-detail-dialog .dialog-close:focus-visible {
+  outline: 2px solid #8a709e;
+  outline-offset: 3px;
+}
+
+.reading-detail-dialog .reading-detail-heading {
+  margin-bottom: 24px;
+  padding: 0;
+}
+
+.reading-detail-dialog .reading-detail-banner {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 268px;
+  padding: 28px 20px;
+  text-align: center;
+  border: 1px solid #ffffffb8;
+  border-radius: 20px;
+  background: #fffdfa;
+  box-shadow: 0 8px 26px #55445a0a;
+}
+
+/* Keep the figure slightly further left and lower while all copy stays centered. */
+.reading-detail-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('./assets/sai-adult-reflection.png') right 42% / cover no-repeat;
+  transform: scale(1.35);
+  transform-origin: right center;
+  opacity: .35;
+  pointer-events: none;
+}
+
+.reading-detail-banner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reading-detail-dialog .reading-detail-context {
+  width: 100%;
+  max-width: 490px;
+  margin-top: 14px;
+  padding: 0;
+  text-align: center;
+}
+
+.reading-detail-dialog .reading-detail-context .eyebrow {
+  margin: 0 0 7px;
+  color: #66516f;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+.reading-detail-dialog .reading-detail-heading h2 {
+  width: 100%;
+  margin: 0;
+  color: #4e3758;
+  font-size: 31px;
+  font-weight: 700;
+  /* AritaBuri's heaviest bundled face is 600; a tiny title-only stroke makes this step visible consistently. */
+  font-synthesis: none;
+  -webkit-text-stroke: .15px currentColor;
+  line-height: 1.5;
+  text-shadow: 0 1px 8px #fffdfacc;
+}
+
+.reading-detail-dialog #reading-detail-intro {
+  margin: 0;
+  color: #62536b;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.9;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.reading-detail-dialog .reading-detail-section {
+  border-color: var(--detail-theme-line);
+  background: #fffffff2;
+  box-shadow: 0 4px 18px #45345303;
+}
+
+.reading-detail-dialog .reading-report-chapter {
+  border-color: var(--detail-theme-line);
+  color: var(--detail-theme-ink);
+}
+
+.reading-detail-dialog .reading-detail-notes {
+  padding: 14px 17px;
+  border: 1px solid var(--detail-theme-line);
+  border-radius: 15px;
+  background: #ffffffed;
+}
+
+.reading-detail-dialog .reading-detail-done {
+  background: #fffffff2;
+}
+
+.reading-detail-dialog .reading-detail-download {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  .reading-detail-dialog .reading-detail-sheet {
+    padding: 55px 18px 28px;
+  }
+
+  .reading-detail-dialog .reading-detail-heading {
+    margin-bottom: 22px;
+    padding: 0;
+  }
+
+  .reading-detail-dialog .reading-detail-banner {
+    min-height: 246px;
+    padding: 26px 15px;
+    border-radius: 15px;
+  }
+
+  .reading-detail-dialog .reading-detail-context {
+    padding: 0;
+  }
+
+  .reading-detail-banner::before {
+    background-position: 72% 40%;
+    transform: translateY(12px) scale(1.2);
+  }
+
+  .reading-detail-dialog:not([data-reading-mode='saju']) .reading-detail-banner::before {
+    background-position: 30% 40%;
+    transform: translateY(22px) scale(1.55);
+  }
+
+  .reading-detail-dialog .reading-detail-heading h2 {
+    font-size: 25px;
+  }
+
+  .reading-detail-dialog #reading-detail-intro {
+    font-size: 11.5px;
+    line-height: 1.9;
+  }
+}
+
+@media (max-width: 360px) {
+  .reading-detail-dialog .reading-detail-sheet {
+    padding-inline: 13px;
+  }
+
+  .reading-detail-dialog .reading-detail-heading h2 {
+    font-size: 22px;
+  }
+}
+
+@media (forced-colors: active) {
+  .reading-detail-sheet::before,
+  .reading-detail-banner::before {
+    display: none;
+  }
+}

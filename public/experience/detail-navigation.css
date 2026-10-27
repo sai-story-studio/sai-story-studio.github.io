@@ -1,0 +1,37 @@
+/* The dialog remains the scrollport. Its final sticky child floats inside it. */
+.reading-detail-dialog > .reading-detail-sheet {
+  padding-bottom: 84px;
+}
+.reading-detail-dialog > .reading-detail-top {
+  position: sticky;
+  z-index: 3;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  margin: -56px 18px 12px auto;
+  padding: 4px;
+  border: 1px solid var(--detail-theme-line, #ddd4e7);
+  border-radius: 50%;
+  background: #fffefa;
+  color: var(--detail-theme-ink, #695879);
+  box-shadow: 0 3px 12px #44325215;
+  font: 500 8px/1.1 Pretendard,sans-serif;
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+.reading-detail-dialog > .reading-detail-top[hidden] { display: none; }
+.reading-detail-top > span:first-child { font-size: 19px; line-height: 1; }
+.reading-detail-dialog > .reading-detail-top:hover { background: #f8f4fb; }
+.reading-detail-dialog > .reading-detail-top:focus-visible { outline: 2px solid var(--detail-theme-ink, #695879); outline-offset: 3px; }
+@media (max-width: 600px) {
+  .reading-detail-dialog > .reading-detail-top { bottom: 12px; margin-right: 12px; }
+}
+@media (forced-colors: active) {
+  .reading-detail-dialog > .reading-detail-top { color: ButtonText; border-color: ButtonText; background: ButtonFace; box-shadow: none; }
+}

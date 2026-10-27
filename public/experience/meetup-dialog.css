@@ -1,0 +1,61 @@
+/* Scoped sunset signup; common reading/admin styles stay unchanged. */
+body.meetup-dialog-is-open { overflow: hidden; }
+#open-meetup-registration { min-height: 36px; margin-top: 29px; padding: 7px 16px; gap: 20px; border: 1px solid #b09abe; border-radius: 22px; background: transparent; color: #967da5; font-size: 11px; font-weight: 500; line-height: 1.6; }
+#open-meetup-registration > span { font-size: 14px; }
+dialog.meetup-dialog { width: min(740px, calc(100% - 32px)); max-width: 740px; max-height: min(91dvh, 920px); margin: auto; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid #fff9; border-radius: 28px; background: linear-gradient(135deg, #fffaf6e8, #faf3fbe8), url('./assets/sai-sky-gathering.png') center 4% / auto 250% no-repeat; color: #66546b; box-shadow: 0 28px 100px #3a284b40; scrollbar-gutter: stable; }
+dialog.meetup-dialog::backdrop { background: linear-gradient(#73577165, #5139567d), url('./assets/sai-sky-gathering.png') center 3% / auto 250% no-repeat; backdrop-filter: blur(8px); }
+.meetup-dialog .meetup-dialog-sheet { padding: 0 40px 32px; }
+.meetup-dialog .meetup-dialog-topbar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: flex-end; padding-block: 12px 4px; pointer-events: none; }
+.meetup-dialog .meetup-dialog-close { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #dfd1e3; border-radius: 50%; background: #fffdf9f5; color: #82698f; font-size: 25px; line-height: 1; pointer-events: auto; box-shadow: 0 3px 12px #75526b0c; }
+.meetup-dialog .meetup-dialog-heading { padding: 2px 10px 20px; text-align: center; }
+.meetup-dialog .p-overline { margin: 0 0 12px; color: #a0829d; font-size: 10px; letter-spacing: .12em; }
+.meetup-dialog h2 { margin: 0 0 14px; color: #795c76; font: 500 clamp(25px, 4vw, 33px)/1.5 AritaBuri, serif; letter-spacing: -.045em; }
+.meetup-dialog .meetup-dialog-heading > p:last-child { max-width: 470px; margin: 0 auto; color: #8e7b91; font-size: 12px; line-height: 1.9; }
+.meetup-dialog .p-purpose-card { margin: 0 0 22px; padding: 17px 19px; border: 1px solid #e8ddeb; border-radius: 16px; background: #ffffffa8; }
+.meetup-dialog .p-purpose-card > p { margin: 0 0 7px; color: #816689; font-size: 12px; line-height: 1.85; }
+.meetup-dialog .p-purpose-card small { color: #a08ca4; font-size: 10px; line-height: 1.8; }
+.meetup-dialog .p-status { padding: 13px 16px; border: 1px solid #e7dbea; border-radius: 12px; background: #ffffffb8; color: #95809f; font-size: 11px; line-height: 1.85; }
+.meetup-dialog .p-status.is-ready { border-color: #dbe6dd; color: #7b8c7d; background: #f8fcf4b8; }
+.meetup-dialog .p-retry { margin: 8px 0 23px; color: #a48aab; font-size: 10px; text-decoration: underline; text-underline-offset: 4px; }
+.meetup-dialog fieldset:disabled { opacity: .6; }
+.meetup-dialog .p-form-grid { display: grid; grid-template-columns: 1fr 1.35fr; gap: 16px; }
+.meetup-dialog .p-field { display: block; margin-bottom: 19px; color: #846f8c; font-size: 12px; }
+.meetup-dialog .p-field > span { margin-left: 5px; color: #b3a0bc; font-size: 10px; }
+.meetup-dialog .p-field input, .meetup-dialog .p-field select { display: block; width: 100%; min-height: 46px; margin-top: 8px; padding: 11px 13px; border: 1px solid #ded0e3; border-radius: 13px; background-color: #fffffff0; font-size: 14px; }
+.meetup-dialog .p-field input::placeholder { color: #b8a8c1; }
+.meetup-dialog .p-help { margin: -5px 0 21px; color: #a28daa; font-size: 10px; line-height: 1.85; }
+.meetup-dialog .p-check { display: grid; grid-template-columns: 17px minmax(0, 1fr); gap: 10px; align-items: start; margin: 16px 0; color: #88718f; font-size: 12px; line-height: 1.85; }
+.meetup-dialog .p-check input { width: 16px; height: 16px; margin: 3px 0 0; accent-color: #a183ad; }
+.meetup-dialog .p-check b { font-weight: 500; }
+.meetup-dialog .p-check small, .meetup-dialog .p-field small { display: block; margin-top: 5px; color: #a18ba9; font-size: 10px; line-height: 1.8; }
+.meetup-dialog .p-optional-card { padding: 2px 17px; border: 1px solid #e8ddeb; border-radius: 15px; background: #ffffffa6; }
+.meetup-dialog .p-birth-field { margin-top: 17px; }
+.meetup-dialog .p-consent { margin-top: 23px; padding: 20px 0; border-block: 1px solid #e3d5e6; }
+.meetup-dialog .p-consent h3 { margin: 0 0 16px; color: #84658e; font-size: 13px; font-weight: 500; }
+.meetup-dialog .p-consent dl { display: grid; grid-template-columns: 69px minmax(0, 1fr); gap: 10px 12px; margin: 0; font-size: 11px; line-height: 1.85; }
+.meetup-dialog .p-consent dt { color: #a18aa9; }
+.meetup-dialog .p-consent dd { margin: 0; color: #8f7899; overflow-wrap: anywhere; }
+.meetup-dialog .p-submit { width: 100%; min-height: 47px; margin-top: 10px; padding: 12px 20px; justify-content: center; border: 1px solid #ad8aad; border-radius: 999px; background: #ad8aad; color: #fff; font-size: 13px; gap: 18px; }
+.meetup-dialog .p-message { margin: 18px 0 0; color: #8b7595; font-size: 12px; line-height: 1.85; }
+.meetup-dialog .p-message.error { color: #a5687b; }
+.meetup-dialog .p-message:empty { margin: 0; }
+.meetup-dialog .p-form-footnote { margin: 19px 0 0; color: #a791ac; font-size: 10px; line-height: 1.85; }
+.meetup-dialog .p-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.meetup-dialog .join-success { display: flex; flex-direction: column; align-items: center; padding: 22px 15px 25px; text-align: center; }
+.meetup-dialog .join-success[hidden], .meetup-dialog #join-entry[hidden] { display: none; }
+.meetup-dialog .join-success-mark { display: grid; place-items: center; width: 62px; height: 62px; margin-bottom: 22px; border: 1px solid #dbcce4; border-radius: 50%; background: #f5eefaeb; color: #9876a4; font-size: 30px; }
+.meetup-dialog .join-success h2 { font-weight: 600; font-synthesis: none; }
+.meetup-dialog .join-success h2:focus { outline: none; }
+.meetup-dialog .join-success > p:not(.p-overline) { margin: 4px 0 14px; font-size: 13px; line-height: 1.9; }
+.meetup-dialog .join-success > .join-success-note { color: #927d9b; font-size: 11px; }
+.meetup-dialog .join-success .p-submit { width: min(100%, 300px); margin-top: 18px; }
+@media (max-width: 560px) {
+  dialog.meetup-dialog { width: calc(100% - 20px); max-height: 93dvh; border-radius: 22px; scrollbar-gutter: auto; }
+  .meetup-dialog .meetup-dialog-sheet { padding-inline: 20px; padding-bottom: 24px; }
+  .meetup-dialog .meetup-dialog-heading { padding-inline: 3px; }
+  .meetup-dialog .p-form-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .meetup-dialog .p-field input, .meetup-dialog .p-field select { font-size: 16px; }
+  .meetup-dialog .p-consent dl { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .meetup-dialog .p-consent dt:not(:first-child) { margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .meetup-dialog { scroll-behavior: auto; } }

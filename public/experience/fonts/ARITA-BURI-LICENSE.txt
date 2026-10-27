@@ -1,0 +1,37 @@
+아리따 부리 / Arita Buri
+Copyright (c) AmorePacific & AhnSangSoo-HanJaeJoon-RyuYangHee.
+All rights reserved.
+
+Official publisher information and original download:
+https://www.apgroup.com/int/ko/about-us/visual-identity/arita-typeface/arita-typeface.html
+https://www.apgroup.com/int/ko/resource/attach/dam/about-us/visual-identity/Arita_Buri_KR.zip
+
+The bundled webfont files are unmodified originals explicitly referenced by
+the publisher's own current CSS, verified 2026-10-22:
+https://design.amorepacific.com/wp-content/themes/by26-locale/assets/css/font.css?ver=1762490334
+https://cdn-design.amorepacific.com/assets-v2/font/Arita-buri-M.woff
+https://cdn-design.amorepacific.com/assets-v2/font/Arita-buri-SB.woff
+
+Authoritative copyright notice record:
+한국저작권위원회 공유마당 - 민간 무료글꼴 정보 - 아리따 부리 (record 5467)
+https://gongu.copyright.or.kr/gongu/bbs/B0000018/list.do?bbsSeCd=04&menuNo=20000
+
+The following is the complete notice shown for that Arita Buri record:
+
+CI 및 BI로의 사용 금지
+아모레퍼시픽과 동종 사업 (화장품/생활용품/건강식품 등의 생산, 판매)을 영위하기 위한 사용 금지 (기업 사이트 및 제품 용기와 단상자, 사용설명서를 포함한 모든 패키지에 사용 등)
+불법, 반사회적 또는 비윤리적 콘텐츠 등 아모레퍼시픽의 이미지 훼손이 우려되는 사용 일체는 금지되며, 사용시 이에 대한 책임을 물을 수 있음
+아리따 글자체를 수정하거나 다른 포맷으로 변형하여 사용하는 것은 엄격하게 금지
+아리따 글자체는 폰트 소프트웨어 또는 개별 구성요소인 폰트 자체로 유료로 판매 금지
+아리따 글자체는 전체나 부분 여부에 상관없이 저작권자 안내와 본 라이선스 규정 내용을 포함하는 경우(독립 텍스트 파일, 가독성이 있는 헤더 혹은 유저가 용이하게 열람 가능한 텍스트 파일 혹은 이진파일, 내 기계가 읽을 수 있는 메타데이터 형태 등)에는 다른 소프트웨어와 함께 묶이거나 재배포가 가능
+아리따 글자체는 저작권자인 아모레퍼시픽의 명시적 서면 허가가 있는 경우를 제외하고는 아리따 글자체 명칭 또는 저작권자의 이름을 사용자의 홍보 및 마케팅을 위한 목적으로 사용할 수 없음
+아리따 글자체가 사용된 인쇄물, 광고물(온라인 포함) 이미지 등은 아모레퍼시픽이 홍보 목적을 위해 활용 가능하며 이를 원치 않는 사용자는 언제든지 당사에 요청
+아모레퍼시픽은 아리따 글자체의 사용 또는 기타 아리따 글자체의 취급과 관련하여 발생하는 어떠한 책임도 가지지 않음
+
+Keep these font files and this notice together. These are not OFL fonts.
+No conversion, subsetting, outline modification, or internal renaming was
+performed. The files are intended for site text/headings, not SAI's logo.
+
+Noonnu's font information additionally lists the credit wording:
+이 제작물은 아모레퍼시픽의 아리따글꼴을 사용하여 디자인 되었습니다.
+https://noonnu.cc/font_page/16

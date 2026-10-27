@@ -1,0 +1,26 @@
+node_modules/
+.cache/
+qa/
+outputs/
+/output/
+*.tar.gz
+dist/
+.next/
+.vinext/
+.wrangler/
+.sites-runtime/
+.env*
+.dev.vars*
+!.env.example
+*.pem
+*.tsbuildinfo
+npm-debug.log*
+next-env.d.ts
+
+# Local deployment identity and data are never uploaded.
+/.openai/hosting.json
+*.sqlite
+*.sqlite3
+*.db
+*.csv
+*.log

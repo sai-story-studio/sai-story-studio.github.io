@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="별자리, 사주, 자미두수의 상징으로 나를 가볍게 들여다보는 사이. 세 가지 시선으로 만나는 나의 작은 우주.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="referrer" content="no-referrer">
+  <title>사이 SAI STUDIO — 나를 읽고, 서로를 알아가는 사이</title>
+  <link rel="preload" href="./assets/sai-handwritten-lockup.png" as="image">
+  <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css?v=32-birthplace-completion">
+  <link rel="stylesheet" href="./detail-themes.css?v=33-banner-weight">
+  <link rel="stylesheet" href="./detail-navigation.css?v=32-birthplace-completion">
+  <link rel="stylesheet" href="./meetup-dialog.css?v=32-birthplace-completion">
+  <script type="importmap">{
+    "imports": {
+      "three": "./vendor/three.module.js",
+      "three/addons/": "./vendor/",
+      "./app.js": "./app.js?v=32-birthplace-completion",
+      "./date-controls.js": "./date-controls.js?v=32-birthplace-completion",
+      "./detail-navigation.js": "./detail-navigation.js?v=32-birthplace-completion",
+      "./site-shell.js": "./site-shell.js?v=32-birthplace-completion",
+      "./mini-objects.js": "./mini-objects.js?v=32-birthplace-completion",
+      "./sky-motion.js": "./sky-motion.js?v=32-birthplace-completion",
+      "./reading-engine.js": "./reading-engine.js?v=32-birthplace-completion",
+      "./birthplace-time.js": "./birthplace-time.js?v=32-birthplace-completion",
+      "./phone-utils.js": "./phone-utils.js?v=32-birthplace-completion",
+      "./join.js": "./join.js?v=32-birthplace-completion",
+      "./meetup-dialog.js": "./meetup-dialog.js?v=32-birthplace-completion",
+      "./day-pillar.js": "./day-pillar.js?v=32-birthplace-completion",
+      "./reading-detail.js": "./reading-detail.js?v=32-birthplace-completion",
+      "./text-layout.js": "./text-layout.js?v=32-birthplace-completion",
+      "./reading-records.js": "./reading-records.js?v=32-birthplace-completion",
+      "./mapping-explanation.js": "./mapping-explanation.js?v=32-birthplace-completion",
+      "./manse-view.js": "./manse-view.js?v=32-birthplace-completion",
+      "./report-format.js": "./report-format.js?v=32-birthplace-completion",
+      "./saju-report.js": "./saju-report.js?v=32-birthplace-completion",
+      "./saju-cycles.js": "./saju-cycles.js?v=32-birthplace-completion",
+      "./natal-auspicious.js": "./natal-auspicious.js?v=32-birthplace-completion",
+      "./ziwei-report.js": "./ziwei-report.js?v=32-birthplace-completion",
+      "./ziwei-structure.js": "./ziwei-structure.js?v=32-birthplace-completion",
+      "./zodiac-profiles.js": "./zodiac-profiles.js?v=32-birthplace-completion",
+      "./reading-pdf-document.js": "./reading-pdf-document.js?v=32-birthplace-completion",
+      "./reading-pdf-export.js": "./reading-pdf-export.js?v=32-birthplace-completion",
+      "./reading-pdf.js": "./reading-pdf.js?v=32-birthplace-completion",
+      "./orbit.js": "./orbit.js?v=32-birthplace-completion"
+    }
+  }</script>
+  <script src="./vendor/lunar.js" defer></script>
+  <script src="./vendor/iztro.min.js" defer></script>
+  <script type="module" src="./app.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./date-controls.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./detail-navigation.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./site-shell.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./mini-objects.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./sky-motion.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./meetup-dialog.js?v=32-birthplace-completion"></script>
+</head>
+<body>
+  <div class="page-sky-layer" aria-hidden="true"><canvas id="page-starfield" class="page-starfield"></canvas></div>
+  <a class="skip-link" href="#reading">체험으로 바로 가기</a>
+  <!-- HEADER: 메뉴와 로고를 이곳에서 수정할 수 있어요. -->
+  <header class="site-header">
+    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="메뉴 열기" aria-haspopup="dialog" aria-controls="menu-dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <a class="wordmark header-wordmark" href="#top" aria-label="SAI STUDIO 홈">SAI STUDIO</a>
+    <a class="header-reading" href="#reading">READING <span aria-hidden="true">↗</span></a>
+  </header>
+  <nav class="category-nav" aria-label="주 메뉴"><a href="#story">ABOUT</a><a href="#reading">READING</a><a href="#meetup">MEETUP</a><a href="#guide">GUIDE</a></nav>
+  <dialog id="menu-dialog" class="menu-dialog" aria-labelledby="menu-title"><div class="menu-inner"><div class="menu-heading"><h2 id="menu-title"><span class="menu-korean">사이</span><span class="menu-english">SAI STUDIO</span></h2><button type="button" data-menu-close aria-label="메뉴 닫기">×</button></div><nav aria-label="전체 메뉴"><a href="#story">ABOUT <small>사이 소개</small></a><a href="#reading">READING <small>나의 성향 읽기</small></a><div class="menu-subcategories"><button data-pick="zodiac" type="button">별자리</button><button data-pick="saju" type="button">사주</button><button data-pick="ziwei" type="button">자미두수</button></div><a href="#meetup">MEETUP <small>관심사로 만나는 모임</small></a><a href="#guide">GUIDE <small>이용 안내</small></a></nav><p>나를 읽고, 서로를 알아가는 사이.</p><a class="menu-admin" href="./operators.html">운영자 관리</a></div></dialog>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <canvas class="section-starfield hero-starfield" data-sky-stars aria-hidden="true"></canvas>
+      <div class="orbit-stage" aria-label="파스텔색 별과 달, 행성이 사이 로고 주위를 천천히 회전하는 장식">
+        <div class="orbit-fallback" aria-hidden="true"><span>✦</span><span>☾</span><span><svg viewBox="0 0 32 32" focusable="false"><path d="M16 2v28M2 16h28M6.1 6.1l19.8 19.8M6.1 25.9 25.9 6.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span>●</span><span>✦</span></div>
+        <div id="orbit-scene" class="orbit-scene"></div>
+        <div class="orbit-logo"><h1 id="hero-title"><span class="hero-korean">사이</span><span class="hero-english">SAI STUDIO</span></h1><p>나를 읽는 세 가지 이야기</p><a href="#reading">별자리 · 사주 · 자미두수 <span aria-hidden="true">↓</span></a></div>
+        <span class="hero-sticker sticker-one" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false"><path d="M16 2v28M2 16h28M6.1 6.1l19.8 19.8M6.1 25.9 25.9 6.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span class="hero-sticker sticker-two" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false"><path d="M16 1C17.5 11 21 14.5 31 16 21 17.5 17.5 21 16 31 14.5 21 11 17.5 1 16 11 14.5 14.5 11 16 1Z" fill="currentColor"/></svg></span>
+        <span class="hero-index">01 — SAI STUDIO</span><a class="hero-scroll" href="#reading">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+    <div class="ribbon" aria-hidden="true"><div class="ribbon-track"><div class="ribbon-group"><span>SAI STUDIO</span><span>나를 읽고, 서로를 알아가는 사이.</span><span>SAI STUDIO</span><span>나를 읽고, 서로를 알아가는 사이.</span><span>SAI STUDIO</span><span>나를 읽고, 서로를 알아가는 사이.</span></div><div class="ribbon-group"><span>SAI STUDIO</span><span>나를 읽고, 서로를 알아가는 사이.</span><span>SAI STUDIO</span><span>나를 읽고, 서로를 알아가는 사이.</span><span>SAI STUDIO</span><span>나를 읽고, 서로를 알아가는 사이.</span></div></div></div>
+    <section class="paths wrap" aria-labelledby="paths-title">
+      <div class="mini-scene reading-mini" data-mini-scene="reading" aria-hidden="true"><span class="mini-fallback">✦ ☾</span></div><div class="section-intro"><h2 id="paths-title">PERSONAL<br>READING</h2><p>별자리, 사주, 자미두수의 상징으로 살펴보는 나의 성향</p></div>
+      <nav class="reading-categories" aria-label="체험 카테고리"><button type="button" data-pick="zodiac" class="is-active" aria-pressed="true">ZODIAC <span>별자리</span></button><button type="button" data-pick="saju" aria-pressed="false">SAJU <span>사주</span></button><button type="button" data-pick="ziwei" aria-pressed="false">ZI WEI <span>자미두수</span></button></nav>
+    </section>
+    <!-- MAIN: 계산은 브라우저 안에서. 명시적인 기록 저장 버튼으로만 입력 기록을 전송합니다. -->
+    <section class="reading-section" id="reading" aria-labelledby="reading-title"><div class="wrap">
+      <div class="reading-heading"><div class="reading-heading-copy"><h2 id="reading-title">나의 성향 읽기</h2><p class="reading-method-description" aria-live="polite" aria-atomic="true"><strong id="reading-method-name">별자리란?</strong><span id="reading-method-description">양력 생일의 12별자리(태양궁)로 성향을 읽는 방식이에요.</span></p></div></div>
+      <div class="reading-layout">
+        <form id="reading-form" class="input-panel">
+          <fieldset class="mode-options"><legend>어떤 시선으로 볼까요?</legend><label><input type="radio" name="mode" value="zodiac" checked><span>별자리</span></label><label><input type="radio" name="mode" value="saju"><span>사주</span></label><label><input type="radio" name="mode" value="ziwei"><span>자미두수</span></label></fieldset>
+          <p id="mode-help" class="field-help">통상적인 양력 생일 구간으로 별자리의 상징을 살펴봐요.</p>
+          <label class="field">이름<input name="nickname" autocomplete="name" maxlength="30" placeholder="이름을 입력해 주세요"></label>
+          <div class="field-row"><label class="field">태어난 날<input name="birthDate" type="date" min="1900-01-01" required aria-describedby="date-help"></label><label class="field calendar-field" hidden>달력 기준<select name="calendar"><option value="solar">양력</option><option value="lunar">음력</option></select></label></div>
+          <p id="date-help" class="field-help">입력한 생년월일로 성향을 계산해요.</p>
+          <label id="leap-field" class="check-field" hidden><input name="leapMonth" type="checkbox">음력 윤달에 태어났어요</label>
+          <div id="time-fields" hidden><label class="field">태어난 시간 <span id="time-optional" class="optional">모르면 비워두세요</span><input type="time" name="birthTime"></label><div id="saju-location-row" class="birth-context-row"><label id="gender-field" class="field" hidden><span id="gender-label">전통 명반 계산용 성별</span><select name="gender" aria-describedby="gender-help"><option value="">선택해 주세요</option><option value="female">여성</option><option value="male">남성</option></select></label><label id="birthplace-field" class="field" hidden>태어난 곳 <span class="optional">국내</span><select name="birthplaceId" aria-describedby="birthplace-help" disabled><option value="">선택 안 함</option></select></label></div><p id="gender-help" class="field-help">명반의 전통 계산 규칙에만 쓰며, 성격이나 성 정체성을 판단하지 않아요.</p><div id="birthplace-correction-field" hidden><label class="check-field birthplace-correction"><input type="checkbox" name="timeCorrection" value="local-mean-solar" disabled><span>출생지 기준 지역 평균태양시로 보정</span></label><p id="birthplace-help" class="field-help">국내 18개 대표 도시의 관측소 좌표를 지원해요. 도시를 고른 뒤 보정을 켤 수 있고, 목록에 없는 도시나 병원의 정확한 위치를 대신 계산하지는 않아요. 출생 당시 한국 표준시·서머타임을 반영하지만 균시차를 적용하는 진태양시는 아니에요. 출생지와 보정 설정은 기기 내 계산·로컬 PDF에서만 쓰고 입력 기록·이메일에는 추가하지 않아요.</p></div></div>
+          <p id="time-warning" class="field-help" hidden>자미두수는 입력한 현지 시각을 그대로 사용하며 출생지·시간대·서머타임·진태양시를 보정하지 않아요.</p>
+          <fieldset id="ziwei-report-fields" class="ziwei-report-fields" hidden disabled><legend>자미두수 풀이 설정</legend><details><summary>풀이 깊이·기준일 설정</summary><div class="ziwei-report-options">
+            <label class="field">풀이 깊이<select name="ziweiReportMode"><option value="QUICK">QUICK · 핵심</option><option value="STANDARD" selected>STANDARD · 기본 상담</option><option value="DEEP">DEEP · 근거까지 자세히</option></select></label>
+            <label class="field">특히 궁금한 영역<select name="ziweiFocus"><option value="all">전체</option><option value="career">직업·사업</option><option value="money">돈·생활 기반</option><option value="relationship">연애·인간관계</option><option value="wellbeing">건강·생활 리듬</option></select></label>
+            <label class="field">해석 기준일<input name="ziweiAsOf" type="date"><span class="field-help">기본은 오늘이에요. 비워 두어도 결과를 계산한 날을 기준으로 사용해요.</span></label>
+            <p class="field-help">현재·다음 대운은 입력한 생년월일과 기준일로 자동 계산해요. 명반의 음력 연도와 세는나이(허세) 기준을 적용하며, 전환 경계는 인접 구간과 함께 보여드려요.</p>
+            <p class="field-help">이 설정은 현재 풀이와 PDF에만 사용해요. DB 기록 항목에 추가하지 않으며, 입력하지 않은 직업·고민·사건은 추정하지 않아요.</p>
+          </div></details></fieldset>
+          <label class="field">휴대폰 번호<input id="reading-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000"></label>
+          <div class="reading-record-notice">
+            <p id="reading-record-state" class="field-help" role="status">기록 저장 시 이름·휴대전화·생년월일을 보관합니다. 저장 없이 결과도 볼 수 있어요.</p>
+            <details id="reading-record-details" class="reading-record-details"><summary>저장 안내 자세히 보기</summary><div class="reading-record-detail-body">
+              <p>‘결과 보기 · 기록 저장’을 누르면 아래 개인정보의 수집·이용과 보관에 동의하고 입력 기록을 저장합니다. 별도 체크박스는 없습니다.</p>
+              <dl><dt>목적</dt><dd id="record-purpose">서버 설정 확인 전</dd><dt>항목</dt><dd>이름, 휴대전화번호, 생년월일, 선택한 체험 주제, 저장 요청 시각과 안내 문구 버전</dd><dt>기간</dt><dd><b id="record-retention">서버 설정 확인 전</b>. 운영자가 기간 내 정리하며 만료 기록은 다음 서비스 접근 시 삭제됩니다. 철회·삭제 요청 또는 목적 달성으로 불필요해지면 지체 없이 삭제합니다.</dd><dt>운영자</dt><dd id="record-operator">서버 설정 확인 전</dd><dt>삭제·문의</dt><dd id="record-contact">서버 설정 확인 전</dd></dl>
+              <p>생년월일은 양력 기준으로 저장합니다. 음력으로 입력한 경우 원래 출생일의 양력 날짜로 바꾸어 보관합니다. 출생시간·성별·출생지·보정 설정·풀이 결과는 입력 기록에 저장하지 않습니다.</p>
+              <p>만 14세 이상만 입력 기록을 저장할 수 있습니다. 저장을 거부해도 ‘저장 없이 결과만 보기’를 사용할 수 있으며 체험 결과에는 제한이 없습니다. 기록 저장을 광고성 정보 수신 동의로 간주하거나 문자·전화 발송에 사용하지 않습니다.</p>
+            </div></details>
+          </div>
+          <p id="reading-record-status" class="form-message" role="status"></p>
+          <p id="form-error" class="form-message error" role="alert"></p>
+          <div class="form-actions"><button id="calculate-button" class="button dark" type="submit" name="action" value="save" disabled>결과 보기 · 기록 저장 <span aria-hidden="true">→</span></button><button id="calculate-send-button" class="button outline" type="submit" name="action" value="send">결과 전송 <span aria-hidden="true">↗</span></button></div><button id="calculate-view-only" class="record-view-only" type="submit" name="action" value="view">저장 없이 결과만 보기</button><p class="micro centered">공식 MBTI 검사나 심리 진단이 아닌 자기 탐색용 콘텐츠입니다.</p>
+        </form>
+        <div id="result-panel" class="result-panel" aria-live="polite" aria-busy="false">
+          <div id="result-empty" class="result-empty"><span class="result-empty-label">YOUR READING</span><h3>나의 결과</h3><p>정보를 입력하고 ‘결과 보기’를 선택하면<br>성향 해석과 계산 근거를 확인할 수 있습니다.</p><span class="result-empty-line" aria-hidden="true"></span></div>
+          <div id="result-content" hidden tabindex="-1"><p id="result-kicker" class="eyebrow"></p><div class="result-top"><span id="result-type" class="result-type"></span><span id="result-symbol" aria-hidden="true">✦</span></div><h3 id="result-title"></h3><p id="result-summary"></p><div id="result-keywords" class="keywords"></div><div id="result-chart" class="result-chart"></div><div id="result-sections" class="result-sections"></div><details class="calculation-details"><summary>어떻게 계산하고 해석했나요?</summary><h4>계산 근거</h4><ul id="result-basis"></ul><h4>자체 해석 규칙</h4><ul id="result-rules"></ul><h4>알아둘 한계</h4><ul id="result-uncertainty"></ul><p id="engine-version" class="micro"></p></details><div class="result-actions"><button id="download-result" class="button outline" type="button">PDF로 받기 <span aria-hidden="true">↓</span></button><button id="open-delivery" class="button dark" type="button">이메일로 받기 <span aria-hidden="true">↗</span></button></div><p id="pdf-export-status" class="pdf-export-status" role="status"></p><p class="micro">당신을 분류하거나 미래를 확정하는 해석이 아니에요. 마음에 닿는 부분만 가볍게 가져가세요.</p></div>
+          <div id="result-reflection" class="result-reflection" hidden><button id="reading-detail-button" type="button" aria-haspopup="dialog" aria-controls="reading-detail-dialog">나에 대해 더 알아보기 <span aria-hidden="true">＋</span></button></div>
+          <p id="result-record-status" class="form-message reading-record-result" role="status"></p>
+        </div>
+      </div>
+    </div></section>
+    <section class="story story-sky" id="story" aria-labelledby="story-title"><canvas class="section-starfield" data-sky-stars aria-hidden="true"></canvas><div class="wrap story-sky-inner"><div class="story-copy"><p class="section-label">ABOUT SAI</p><h2 id="story-title">나를 읽고,<br>서로를 알아가는 사이.</h2><p><span class="copy-paragraph">별자리와 사주, 자미두수의 상징을 지금의 언어로 풀어보는 개인 프로젝트.</span><span class="copy-paragraph">나를 돌아보는 작은 체험에서, 서로를 알아가는 만남으로 이어집니다.</span></p><p class="story-note">결과는 정답이나 평가가 아니에요.<br>나와 닮은 이야기만, 가볍게 가져가세요.</p><a href="#guide" class="button sky-button">사이 이용 안내 <span aria-hidden="true">↗</span></a></div></div></section>
+    <section class="meetup-section" id="meetup" aria-labelledby="meetup-title"><div class="wrap meetup-layout"><p class="section-label meetup-label">MEETUP</p><div class="meetup-side"><figure class="meetup-sky"><img src="./assets/sai-sky-gathering.png" alt="넓고 따뜻한 하늘 아래 모인 성인 친구 다섯 명의 상상화" width="1456" height="1086" loading="lazy"></figure><div class="mini-scene meetup-mini" data-mini-scene="meetup" aria-hidden="true"><span class="mini-fallback">☾ ✦</span></div></div><div class="meetup-copy"><h2 id="meetup-title"><span class="meetup-heart" aria-hidden="true">♥</span> 같은 관심사로 모이는 모임</h2><p>MBTI 이야기, 같은 별자리, 사주와 자미두수.<br>서로의 이야기를 편하게 나눌 수 있는 취미·교류 모임을 구상하고 있습니다.</p><ul class="meetup-list"><li><span>01</span> MBTI 이야기 모임</li><li><span>02</span> 같은 별자리 모임</li><li><span>03</span> 사주 · 자미두수 이야기 모임</li></ul><p id="meetup-collection-state" class="micro" role="status">장소와 일정은 준비 중입니다. 모임 관심 신청 팝업에서 현재 신청 준비 상태를 확인할 수 있습니다.</p><button id="open-meetup-registration" class="button outline" type="button" data-meetup-open aria-haspopup="dialog" aria-controls="meetup-registration">모임 관심 신청 <span aria-hidden="true">↗</span></button></div></div></section>
+    <section class="guide wrap" id="guide" aria-labelledby="guide-title"><div><p class="section-label">GUIDE</p><h2 id="guide-title">이용 안내</h2></div><div class="faq">
+      <details><summary>정식 MBTI 검사와는 어떻게 다른가요?</summary><p>정식 성격 검사는 본인이 문항에 응답해 선호를 살펴보는 방식입니다.</p><p>이 콘텐츠는 별자리·오행·명궁 주성의 상징을 자체 작성한 규칙으로 네 글자에 연결합니다. 과학적으로 성격을 측정하거나 실제 MBTI를 예측하지 않습니다.</p></details>
+      <details><summary>어떤 모임을 준비하고 있나요?</summary><p>MBTI 이야기, 같은 별자리, 사주·자미두수 이야기처럼 비슷한 관심사를 나누는 일반 취미·교류 모임입니다.</p><p>장소와 일정은 준비 중이며, <a class="text-link" href="#meetup-registration">모임 관심 신청</a>에서 이름과 휴대전화를 직접 입력하고 모임 안내 목적에 동의할 수 있습니다.</p><p>신청은 참가 확정이나 문자 발송 완료가 아니며, 다른 참가자에게 연락처나 생년월일을 공개하지 않습니다.</p></details>
+      <details><summary>세 가지 결과가 달라도 괜찮나요?</summary><p>네. 서로 다른 상징을 사용하므로 결과가 다를 수 있어요. 같은 입력에는 같은 규칙을 적용하며 무작위로 결과를 만들지는 않습니다.</p></details>
+      <details><summary>내 정보는 언제 저장되나요?</summary><p>‘결과 보기 · 기록 저장’을 누르면 이름·휴대전화·양력 생년월일·선택 주제와 저장 안내 기록을 성향 체험 입력 기록 관리 목적으로 보관합니다. ‘저장 없이 결과만 보기’는 입력정보를 DB에 보내지 않습니다.</p><p>출생시간·성별·풀이 결과는 입력 기록에 저장하지 않으며 광고성 정보 수신 동의나 문자·전화 발송으로 처리하지 않습니다. 별도 모임 관심 신청 팝업는 자체 안내와 선택 항목을 따릅니다.</p><p>보관기간은 <span data-participant-retention>서버 설정 확인 전</span>이며, 운영자는 <span data-participant-operator>서버 설정 확인 전</span>입니다. 철회·삭제는 <span data-participant-contact>서버 설정 확인 전</span>로 요청할 수 있습니다.</p></details>
+      <details><summary>이메일·문자는 바로 받을 수 있나요?</summary><p><span data-result-delivery-state>PDF 이메일 발송은 서비스 연결 상태를 확인한 뒤 열립니다.</span> PDF로 받기는 메일 신청 없이 바로 사용할 수 있습니다. 문자 발송은 준비 중이며, 모임 관심 신청만으로 결과 메일이나 문자가 발송되지는 않습니다.</p></details>
+      <details><summary>사주·자미두수는 어디까지 계산하나요?</summary><p>사주는 원국·십성·세운을, 생시와 계산용 성별이 있으면 대운의 시작과 기간도 계산합니다. 지원되는 국내 도시와 생시를 입력하면 지역 평균태양시 보정을 선택할 수 있고, 적용 시각과 기준은 계산 근거에 표시합니다. 균시차를 더한 진태양시는 아닙니다.</p><p>자미두수는 입력한 현지 시각을 그대로 사용해 출생 명반의 12궁과 별 배치를 보여줍니다. 출생지·시간대·서머타임은 추가 보정하지 않습니다. 시간·윤달·절기의 적용 범위는 계산 근거에 설명하며, 전통 상징 해석은 과학적 성격 진단이나 전문 감정이 아닙니다.</p></details>
+      <details class="motion-settings"><summary>화면 움직임 설정</summary><p>기기의 ‘동작 줄이기’ 설정을 따릅니다. 필요한 경우 아래에서 배경과 장식의 움직임을 직접 멈출 수 있어요.</p><button id="motion-toggle" class="motion-toggle" type="button" hidden>움직임 멈추기</button></details>
+    </div></section>
+  </main>
+  <!-- FOOTER: 정식 운영 전 운영자와 문의 정보를 서버 환경변수로 설정하세요. -->
+  <footer class="site-footer"><div class="footer-sky" data-footer-sky data-motion="paused" aria-hidden="true"><span class="footer-sky-moon"></span><span class="footer-sky-clouds"></span></div><div class="mini-scene footer-mini" data-mini-scene="footer" aria-hidden="true"><span class="mini-fallback">✦</span></div>
+    <div class="wrap footer-main"><a class="wordmark" href="#top">사이<span>SAI STUDIO</span></a><div class="footer-about"><p>나를 읽고, 서로를 알아가는 사이.</p><span>별자리 · 사주 · 자미두수 / 개인 프로젝트</span></div><nav class="footer-links" aria-label="하단 메뉴"><a href="#story">ABOUT</a><a href="#reading">READING</a><a href="#meetup">MEETUP</a><a href="#guide">GUIDE</a></nav>
+      <div class="footer-info"><button class="text-button" id="privacy-button" type="button">개인정보 안내</button><a href="./operators.html">운영자 관리</a><p><span>운영 정보 설정 전</span><span>문의처 확인 전</span><span>보관기간 확인 전</span></p></div>
+    </div><div class="wrap footer-bottom"><span>© 2026 SAI STUDIO. All rights reserved.</span><span>공식 MBTI 검사 또는 심리 진단 서비스가 아닙니다.</span></div>
+  </footer>
+  <button id="back-to-top" class="back-to-top" type="button" aria-label="맨 위로 이동"><span aria-hidden="true">↑</span><small>TOP</small></button>
+  <dialog id="meetup-registration" class="meetup-dialog" aria-labelledby="meetup-dialog-title" aria-describedby="meetup-dialog-intro">
+    <div class="meetup-dialog-sheet">
+      <div class="meetup-dialog-topbar"><button class="meetup-dialog-close" type="button" data-meetup-close aria-label="모임 관심 신청 닫기" autofocus>×</button></div>
+      <div id="join-entry"><header class="meetup-dialog-heading"><p class="p-overline">SAI / MEETUP INTEREST</p><h2 id="meetup-dialog-title">관심이 닿는 곳에서,<br>가볍게 만나요.</h2><p id="meetup-dialog-intro">성향 이야기를 나누는 일반 취미·교류 모임에 관심을 남겨요. 성향 체험에 입력한 연락처는 이 신청으로 자동 전달되지 않습니다.</p></header>
+      <div class="p-purpose-card"><p id="join-purpose">MBTI·별자리·사주 등 성향을 나누는 일반 모임 참가 관심 신청 및 안내</p><small>신청은 참가 확정이나 문자 발송 완료가 아닙니다. 현재 자동 안내 발송 기능은 없습니다.</small></div>
+      <div id="join-state" class="p-status" role="status">창을 열면 현재 신청 준비 상태를 확인합니다.</div><button id="refresh-join-state" class="p-retry" type="button">준비 상태 다시 확인</button>
+      <form id="join-form"><fieldset id="join-fields" disabled><legend class="p-sr-only">모임 관심 신청 입력</legend>
+        <div class="p-form-grid"><label class="p-field">이름 <span>필수</span><input name="name" autocomplete="name" maxlength="30" required placeholder="연락받을 이름"></label><label class="p-field">휴대전화 <span>필수</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="010-0000-0000" aria-describedby="join-phone-help"></label></div>
+        <p id="join-phone-help" class="p-help">모임 일정·참가 안내에 사용할 연락처입니다. 010 또는 +82 형식으로 입력해 주세요.</p>
+        <label class="p-field">관심 주제 <span>선택</span><select name="topic"><option value="">아직 정하지 않았어요</option><option value="mbti">MBTI</option><option value="zodiac">별자리</option><option value="saju">사주</option><option value="ziwei">자미두수</option></select></label>
+        <div class="p-optional-card"><label class="p-check"><input type="checkbox" name="storeBirthData"><span><b>생년월일 저장에 별도로 동의합니다.</b><small>선택 사항입니다. 거부해도 모임 관심 신청을 할 수 있습니다.</small></span></label><label id="join-birth-field" class="p-field p-birth-field" hidden>양력 생년월일 <input name="birthDate" type="text" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="YYYY.MM.DD" disabled aria-describedby="join-birth-help"><small id="join-birth-help">출생시간·성별은 받지 않습니다. 선택하면 생년월일이 같은 보관기간 동안 저장됩니다.</small></label></div>
+        <section class="p-consent" aria-labelledby="join-consent-title"><h3 id="join-consent-title">모임 관심 신청을 위한 수집·이용</h3><dl><dt>운영 주체</dt><dd id="join-operator">설정 전 — 현재 수집하지 않음</dd><dt>문의처</dt><dd id="join-contact">설정 전</dd><dt>목적</dt><dd id="join-consent-purpose">일반 모임 참가 관심 신청 및 일정·참가 안내</dd><dt>필수 항목</dt><dd>이름, 휴대전화, 신청·동의 시각과 동의서 버전</dd><dt>선택 항목</dt><dd>관심 주제, 별도 저장 동의한 양력 생년월일</dd><dt>보관기간</dt><dd id="join-retention">운영 전 보관기간 설정이 필요합니다.</dd><dt>거부 권리</dt><dd>동의하지 않으면 신청할 수 없지만 성향 체험과 사이트 열람은 계속 이용할 수 있습니다.</dd></dl></section>
+        <label class="p-check"><input type="checkbox" name="collectionConsent" required><span><b>위 목적과 항목의 수집·이용에 동의합니다.</b><small>필수 · 성향 결과 발송 신청과는 별개의 모임 관심 신청입니다.</small></span></label><label class="p-check"><input type="checkbox" name="ageConfirm14" required><span><b>만 14세 이상입니다.</b><small>필수 · 만 14세 미만의 신청은 받지 않습니다.</small></span></label>
+        <button class="button p-submit" id="submit-join" type="submit">모임 관심 신청하기 <span aria-hidden="true">↗</span></button>
+      </fieldset><p id="join-message" class="p-message" role="status" tabindex="-1"></p></form>
+      <p class="p-form-footnote">신청 버튼을 누르기 전에는 이름·휴대전화를 서버로 보내지 않습니다. 닫으면 입력은 비워지며, 신청 기록은 소스 저장소와 분리된 DB에 보관합니다.</p>
+      </div>
+      <section id="join-success" class="join-success" role="status" aria-labelledby="join-success-title" hidden><span class="join-success-mark" aria-hidden="true">✓</span><p class="p-overline">YOUR INTEREST IS SAVED</p><h2 id="join-success-title" tabindex="-1">모임 관심 신청이<br>완료됐어요.</h2><p id="join-success-description">관심을 남겨 주셔서 고마워요.<br>신청 내용이 정상적으로 접수됐어요.</p><p class="join-success-note">모임 참가 확정이나 안내 문자 발송 완료는 아니에요.<br>일정·참가 안내는 운영자가 별도로 진행해요.</p><button class="button p-submit" type="button" data-meetup-close>확인 · 창 닫기</button></section>
+    </div>
+  </dialog>
+  <dialog id="reading-detail-dialog" class="reading-detail-dialog" aria-labelledby="reading-detail-title"><div class="reading-detail-sheet"><button class="dialog-close" type="button" data-close aria-label="풀이 창 닫기">×</button><header class="reading-detail-heading"><div class="reading-detail-banner"><h2 id="reading-detail-title">나에 대해<br>더 알아가는 시간</h2><div class="reading-detail-context"><p id="reading-detail-label" class="eyebrow"></p><p id="reading-detail-intro"></p></div></div></header><div id="reading-detail-sections" class="reading-detail-sections"></div><div id="reading-detail-notes" class="reading-detail-notes"></div><div class="reading-detail-download"><button id="detail-download-pdf" class="button outline" type="button">풀이 전체 PDF로 받기 <span aria-hidden="true">↓</span></button><p class="pdf-export-status" id="detail-pdf-status" role="status"></p></div><button class="button outline reading-detail-done" type="button" data-close>천천히 돌아볼게요</button></div><button id="reading-detail-top" class="reading-detail-top" type="button" data-detail-top aria-label="풀이 맨 위로 이동" hidden><span aria-hidden="true">↑</span><span aria-hidden="true">TOP</span></button></dialog>
+  <dialog id="delivery-dialog" aria-labelledby="delivery-title"><div class="dialog-inner"><button class="dialog-close" type="button" data-close aria-label="창 닫기">×</button><p class="eyebrow">KEEP YOUR LITTLE UNIVERSE</p><h2 id="delivery-title">나의 이야기를 받아두기.</h2><p>성향 결과 전달을 위한 별도 신청입니다. 모임에 관심을 남기려면 <a class="text-link" href="#meetup-registration">모임 관심 신청</a>을 이용해 주세요.</p><p id="collection-state" class="service-state" role="status">결과 발송 서비스 상태를 확인하고 있어요.</p>
+    <form id="delivery-form"><fieldset id="delivery-fields" disabled><label class="field">받는 방법<select name="channel"><option value="email">이메일</option><option value="sms" disabled>문자 — 연결 준비 중</option></select></label><label class="field">받을 이메일<input type="email" name="contact" autocomplete="email" maxlength="254" required placeholder="hello@example.com"></label>
+    <details class="consent-info delivery-notice"><summary>PDF 이메일 발송 안내 자세히</summary><dl><dt>운영자</dt><dd id="operator-name">설정 전</dd><dt>문의</dt><dd id="contact-email">설정 전</dd><dt>목적</dt><dd>요청한 성향 결과·상세 풀이 PDF의 저장 및 이메일 전달</dd><dt>항목</dt><dd>이메일, 결과 유형·해석·계산된 원국 등 PDF 보고서 내용, 신청 시각, 동의 기록. 이름은 입력한 경우에만 저장합니다. 원본 생년월일·시간은 아래 선택 항목에 동의한 경우에만 함께 저장합니다.</dd><dt>보관</dt><dd id="retention-text">운영 전 보관기간 설정이 필요합니다.</dd><dt>거부 권리</dt><dd>동의하지 않아도 화면에서 결과를 확인하거나 내 기기에 PDF로 저장할 수 있습니다. 이메일 발송만 신청할 수 없습니다.</dd></dl></details>
+    <label class="check-field"><input type="checkbox" name="storeBirthData"><span><b>[선택]</b> 출생정보도 결과와 함께 저장하기<br><small>생년월일·입력한 출생시간을 위 보관기간 동안 저장합니다. 선택하지 않아도 결과 발송을 신청할 수 있어요.</small></span></label>
+    <label class="check-field"><input type="checkbox" name="ageConfirm14" required><span>만 14세 이상입니다.</span></label><label class="check-field"><input type="checkbox" name="resultConsent" required><span>안내된 목적·항목·기간을 확인하고 결과 발송을 위한 개인정보 수집·이용에 동의합니다.</span></label>
+    <fieldset id="followup-fields" class="consent-info" disabled><h3>비슷한 결의 사람들과, 조금 더 가까이.</h3><p id="meetup-purpose" class="field-help">MBTI·별자리·사주 등 성향 이야기를 나누는 취미·교류 모임 일정 및 참가 안내</p><p class="field-help">선택한 이메일, 이름·결과 유형, 관심 모임과 동의 기록을 위 보관기간 동안 모임 안내에도 사용합니다. 동의하지 않아도 결과 발송에는 영향이 없어요. 철회·삭제는 운영자 문의처로 요청할 수 있습니다.</p><label class="check-field"><input type="checkbox" name="followupConsent"><span><b>[선택]</b> 일반 모임 안내를 위한 위 개인정보 수집·이용 및 이메일 안내 수신에 동의합니다.</span></label><div class="meetup-topics"><span class="field-help">안내받고 싶은 모임</span><label class="check-field"><input type="checkbox" name="meetupTopics" value="mbti">MBTI 이야기 모임</label><label class="check-field"><input type="checkbox" name="meetupTopics" value="zodiac">같은 별자리 모임</label><label class="check-field"><input type="checkbox" name="meetupTopics" value="saju">사주 이야기 모임</label><label class="check-field"><input type="checkbox" name="meetupTopics" value="ziwei">자미두수 이야기 모임</label></div></fieldset>
+    <button class="button dark full" type="submit">PDF 이메일 보내기 <span aria-hidden="true">↗</span></button></fieldset><p id="delivery-message" class="form-message" role="status"></p></form><button id="delivery-download-pdf" class="button outline full" type="button">PDF로 바로 저장 <span aria-hidden="true">↓</span></button><p id="delivery-pdf-status" class="pdf-export-status" role="status"></p><p class="micro">모임 안내는 별도로 동의한 경우에만 보내며, 연락처·생년월일은 다른 참가자에게 공개하지 않습니다.</p>
+  </div></dialog>
+  <dialog id="privacy-dialog" aria-labelledby="privacy-title"><div class="dialog-inner"><button class="dialog-close" type="button" data-close aria-label="창 닫기">×</button><p class="eyebrow">YOUR CHOICE, ALWAYS</p><h2 id="privacy-title">개인정보 안내</h2>
+    <p>성향 체험은 브라우저 안에서 계산합니다. ‘저장 없이 결과만 보기’는 입력정보를 DB·분석도구·AI API에 보내지 않습니다.</p>
+    <h3>메인 체험 입력 기록</h3><p>‘결과 보기 · 기록 저장’을 누르면 이름·휴대전화·양력 생년월일·선택 주제와 저장 안내 문구 버전·시각을 성향 체험 입력 기록 관리 및 보관 목적으로 저장합니다. 음력 생일은 계산에 사용한 양력 날짜로 변환해 보관합니다. 출생시간·성별·풀이 결과는 이 기록에 넣지 않습니다. 만 14세 이상만 저장할 수 있으며, 저장을 거부해도 결과 확인에 제한이 없습니다. 메인 입력 기록을 홍보 수신 동의로 간주하거나 광고성 문자·전화 발송에 사용하지 않습니다.</p>
+    <h3>일반 모임 관심 신청</h3><p>별도 <a class="text-link" href="#meetup-registration">모임 관심 신청 팝업</a>에서 이름·휴대전화와 수집·이용 동의, 만 14세 이상 확인을 받아 일반 모임 참가 관심 신청과 안내를 위해 저장합니다. 관심 주제는 선택 사항이며 양력 생년월일은 별도 저장 동의한 경우에만 받습니다. 메인의 입력 기록과 서로 대신하지 않습니다.</p>
+    <p>운영 주체: <span data-participant-operator>서버 설정 확인 전</span><br>문의처: <span data-participant-contact>서버 설정 확인 전</span><br>보관기간: <span data-participant-retention>서버 설정 확인 전</span>. 철회·삭제 요청 또는 목적 달성으로 불필요해지면 지체 없이 삭제합니다.</p><p id="privacy-participant-state">실제 서버의 운영 정보와 DB 준비 상태를 확인한 뒤 기록 저장을 허용합니다. 기록 저장은 홍보 수신 동의나 자동 발송을 뜻하지 않습니다.</p>
+    <h3>성향 결과 발송</h3><p><span data-result-delivery-state>PDF 이메일 발송은 별도로 준비 상태를 확인합니다.</span> 이메일·결과 유형·원국과 상세 풀이가 포함된 보고서는 명시적으로 발송에 동의한 경우에만 저장·전달합니다. 원본 생년월일·시간의 저장 여부는 별도로 선택하며 메인의 입력 기록 저장과 서로 대신하지 않습니다. 결과 확인과 내 기기의 PDF 저장은 발송 신청 없이 사용할 수 있습니다.</p><p>신청 기록은 코드 저장소와 분리된 DB에 보관하고 허용된 운영자만 조회·삭제합니다. 보관기간 내 정리는 운영자가 관리하며 만료 기록은 관련 서비스 접근 시 삭제합니다. 내보낸 관리자 CSV는 운영자가 별도로 보관·삭제해야 합니다.</p><button class="button outline" data-close type="button">확인했어요</button></div></dialog>
+  <noscript><p class="noscript">성향 계산에는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜주세요.</p></noscript>
+</body>
+</html>
