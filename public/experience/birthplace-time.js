@@ -142,7 +142,7 @@ export function resolveKoreanBirthTime({ solarDate, birthTime = null, birthplace
   }
   const resolved = resolveSeoulCivilTime(metadata.originalDateTime);
   const errors = {
-    unsupported: '1908년 4월 1일 이전에는 이 보정 방식의 한국 표준시 이력을 지원하지 않습니다. 보정 안 함을 선택해 주세요.',
+    unsupported: '1908년 4월 1일 이전에는 이 보정 방식의 한국 표준시 이력을 지원하지 않습니다. 태어난 곳을 선택 안 함으로 바꿔 주세요.',
     ambiguous: '표준시 또는 서머타임 전환으로 두 번 존재하는 시각입니다. 어느 시각인지 확인할 수 없어 보정하지 않았습니다.',
     nonexistent: '표준시 또는 서머타임 전환으로 존재하지 않는 시각입니다. 원래 출생 기록을 확인해 주세요.',
     'invalid-input': '보정할 원래 날짜와 시각을 확인해 주세요.',

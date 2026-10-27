@@ -1,5 +1,6 @@
 import { validateOptionalPhone, bindPhoneInput } from './phone-utils.js';
 import { normalizeDateText, formatDateInput } from './date-controls.js';
+import { publicApiFetch } from './api-client.js';
 
 // Independent signup: no reading-form, URL data, analytics or persistent storage.
 const bindings = new WeakMap();
@@ -9,7 +10,7 @@ function todayISO() {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 const text = (value) => typeof value === 'string' ? value.trim() : '';
-export function initJoinForm(root, { fetchImpl = globalThis.fetch, today = todayISO, autoLoad = true, isActive = () => true } = {}) {
+export function initJoinForm(root, { fetchImpl = publicApiFetch, today = todayISO, autoLoad = true, isActive = () => true } = {}) {
   const $ = (id) => root?.querySelector?.(`#${id}`);
   const form = $('join-form');
   if (!form) return null;

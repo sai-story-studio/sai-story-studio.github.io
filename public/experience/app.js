@@ -1,4 +1,5 @@
 import { calculateReading } from './reading-engine.js';
+import { publicApiFetch } from './api-client.js';
 import { validateOptionalPhone, bindPhoneInput } from './phone-utils.js';
 import { describeDayPillar } from './day-pillar.js';
 import { buildReadingDetail, readingResultSummary, sajuTimeCorrectionDisplay } from './reading-detail.js';
@@ -19,7 +20,7 @@ const readingRecord = createReadingRecordController({ form });
 const modes = { zodiac: '별자리', saju: '사주', ziwei: '자미두수' };
 const help = {
   zodiac: '통상적인 양력 생일 구간으로 별자리의 상징을 살펴봐요.',
-  saju: '출생일의 원국을 계산해요. 생시와 전통 계산용 성별을 함께 입력하면 대운도 볼 수 있어요.',
+  saju: '출생일과 계산용 성별을 입력해요. 생시를 알면 대운도 계산하고, 태어난 도시를 선택하면 평균태양시로 자동 보정해요.',
   ziwei: '실제 자미두수 명반의 명궁 주성을 살펴봐요. 출생시간과 전통 계산용 성별이 필요합니다.',
 };
 const methodDescriptions = {
@@ -81,15 +82,29 @@ function syncBirthplaceControls() {
   $('birthplace-field').hidden = !saju;
   $('birthplace-correction-field').hidden = !saju;
   form.elements.birthplaceId.disabled = !saju;
-  form.elements.timeCorrection.disabled = !saju || !city;
-  if (!city) form.elements.timeCorrection.checked = false;
   $('time-warning').textContent = !saju
     ? '자미두수는 입력한 현지 시각을 그대로 사용하며 출생지·시간대·서머타임·진태양시를 보정하지 않아요.'
-    : form.elements.timeCorrection.checked
+    : city
       ? form.elements.birthTime.value
-        ? '선택 도시의 대표 경도와 출생 당시 한국 표준시·서머타임으로 지역 평균태양시를 계산해요. 균시차는 적용하지 않으며 보정 기준은 결과에서 확인할 수 있어요.'
-        : '생시를 모르면 도시와 보정 설정을 선택해도 시각을 추정하지 않아요. 시주는 비워 두고 확인된 출생일만 사용해요.'
-      : '보정을 켜지 않으면 입력한 시각을 그대로 사용해요. 다른 만세력의 출생지·표준시·절기 적용 방식과 결과가 다를 수 있어요.';
+        ? '선택한 도시의 대표 경도와 출생 당시 한국 표준시·서머타임으로 지역 평균태양시를 자동 적용해요. 균시차는 적용하지 않으며 보정 기준은 결과에 표시해요.'
+        : '생시를 모르면 도시를 선택해도 시각을 추정하지 않아요. 시주는 비워 두고 확인된 출생일만 사용해요.'
+      : '태어난 곳을 선택하지 않으면 입력한 시각을 그대로 사용해요. 다른 만세력의 출생지·표준시·절기 적용 방식과 결과가 다를 수 있어요.';
+}
+function requireReadingFields(mode) {
+  const fields = mode === 'zodiac' ? [] : [
+    { field: form.elements.gender, values: ['female', 'male'], message: '계산용 성별을 선택해 주세요.' },
+  ];
+  if (mode === 'ziwei') fields.push(
+    { field: form.elements.ziweiReportMode, values: ['QUICK', 'STANDARD', 'DEEP'], message: '자미두수 풀이 깊이를 선택해 주세요.' },
+    { field: form.elements.ziweiFocus, values: ['all', 'career', 'money', 'relationship', 'wellbeing'], message: '자미두수에서 궁금한 영역을 선택해 주세요.' },
+    { field: form.elements.ziweiAsOf, message: '자미두수 해석 기준일을 입력해 주세요.' },
+  );
+  for (const { field, values, message } of fields) {
+    if (field.value && (!values || values.includes(field.value))) continue;
+    if (mode === 'ziwei' && field !== form.elements.gender) $('ziwei-report-fields').querySelector('details').open = true;
+    field.focus({ preventScroll: true });
+    throw new Error(message);
+  }
 }
 function updateMode() {
   const mode = selectedMode();
@@ -103,12 +118,14 @@ function updateMode() {
   $('gender-field').hidden = !traditional;
   $('ziwei-report-fields').hidden = mode !== 'ziwei';
   $('ziwei-report-fields').disabled = mode !== 'ziwei';
-  $('gender-label').textContent = mode === 'saju' ? '성별 (선택)' : '전통 명반 계산용 성별';
+  $('gender-label').textContent = mode === 'saju' ? '성별 · 필수' : '전통 명반 계산용 성별 · 필수';
   $('gender-help').textContent = mode === 'saju'
-    ? '대운의 순행·역행 규칙에만 사용해요. 선택하지 않아도 원국과 세운은 볼 수 있어요.'
+    ? '대운의 순행·역행을 정하는 전통 계산 규칙에 필요해요. 성격이나 성 정체성을 판단하지 않아요.'
     : '명반의 전통 계산 규칙에만 쓰며, 성격이나 성 정체성을 판단하지 않아요.';
   form.elements.birthTime.required = mode === 'ziwei';
-  form.elements.gender.required = mode === 'ziwei';
+  form.elements.gender.required = traditional;
+  form.elements.gender.disabled = !traditional;
+  for (const field of ['ziweiReportMode', 'ziweiFocus', 'ziweiAsOf']) form.elements[field].required = mode === 'ziwei';
   $('time-optional').textContent = mode === 'ziwei' ? '필수' : '모르면 비워두세요';
   $('leap-field').hidden = !traditional || form.elements.calendar.value !== 'lunar';
   syncBirthplaceControls();
@@ -117,12 +134,16 @@ function updateMode() {
 for (const radio of form.querySelectorAll('[name="mode"]')) radio.addEventListener('change', updateMode);
 form.elements.calendar.addEventListener('change', updateMode);
 form.elements.birthplaceId.addEventListener('change', syncBirthplaceControls);
-form.elements.timeCorrection.addEventListener('change', syncBirthplaceControls);
 form.elements.birthTime.addEventListener('input', syncBirthplaceControls);
 form.elements.birthTime.addEventListener('change', syncBirthplaceControls);
+form.addEventListener('invalid', (event) => {
+  const details = event.target.closest?.('#ziwei-report-fields details');
+  if (details) details.open = true;
+}, true);
 form.addEventListener('reset', () => { requestAnimationFrame(updateMode); });
 const today = new Date();
 form.elements.ziweiAsOf.value = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(today);
+form.elements.ziweiAsOf.defaultValue = form.elements.ziweiAsOf.value;
 form.elements.birthDate.max = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
 for (const button of document.querySelectorAll('[data-pick]')) button.addEventListener('click', () => {
   form.elements.mode.value = button.dataset.pick;
@@ -338,6 +359,7 @@ form.addEventListener('submit', (event) => {
   $('result-panel').setAttribute('aria-busy', 'true');
   try {
     const mode = selectedMode();
+    requireReadingFields(mode);
     const input = {
       mode, nickname: form.elements.nickname.value.trim(), birthDate: form.elements.birthDate.value,
       birthTime: mode === 'zodiac' ? null : form.elements.birthTime.value || null,
@@ -346,11 +368,11 @@ form.addEventListener('submit', (event) => {
       gender: mode !== 'zodiac' ? form.elements.gender.value || null : null,
       ...(mode === 'saju' ? {
         birthplaceId: form.elements.birthplaceId.value || null,
-        timeCorrection: form.elements.timeCorrection.checked ? 'local-mean-solar' : 'none',
+        timeCorrection: form.elements.birthplaceId.value ? 'local-mean-solar' : 'none',
       } : {}),
       ...(mode === 'ziwei' ? { ziweiReport: {
         mode: form.elements.ziweiReportMode.value,
-        asOf: form.elements.ziweiAsOf.value || null,
+        asOf: form.elements.ziweiAsOf.value,
         focus: form.elements.ziweiFocus.value,
       } } : {}),
     };
@@ -404,7 +426,7 @@ $('delivery-download-pdf').addEventListener('click', () => { void downloadCurren
 
 async function updateServiceConfig() {
   try {
-    const response = await fetch('/api/config', { cache: 'no-store', credentials: 'same-origin' });
+    const response = await publicApiFetch('/api/config', { cache: 'no-store' });
     if (!response.ok) throw new Error('서비스 상태 확인 실패');
     serviceConfig = await response.json();
     const available = serviceConfig.collectionEnabled && (serviceConfig.deliveryConfigured?.email || serviceConfig.deliveryConfigured?.sms);
@@ -433,7 +455,7 @@ async function updateServiceConfig() {
 async function updateParticipantInfo() {
   const sequence = ++participantInfoSequence;
   try {
-    const response = await fetch('/api/participants/config', { cache: 'no-store', credentials: 'same-origin' });
+    const response = await publicApiFetch('/api/participants/config', { cache: 'no-store' });
     if (!response.ok) throw new Error('모임 신청 준비 상태 확인 실패');
     const config = await response.json();
     if (sequence !== participantInfoSequence) return;
@@ -640,7 +662,7 @@ deliveryForm.addEventListener('submit', async (event) => {
     const fingerprint = JSON.stringify(payload);
     if (!deliveryAttempt || deliveryAttempt.fingerprint !== fingerprint) deliveryAttempt = { fingerprint, requestKey: crypto.randomUUID() };
     payload.requestKey = deliveryAttempt.requestKey;
-    const response = await fetch('/api/requests', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    const response = await publicApiFetch('/api/requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     const data = await response.json();
     if (!currentDeliveryView()) return;
     if (!response.ok) throw new Error(data.error?.message || '신청을 저장하지 못했습니다.');

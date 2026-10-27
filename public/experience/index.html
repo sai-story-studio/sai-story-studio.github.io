@@ -18,21 +18,22 @@
     "imports": {
       "three": "./vendor/three.module.js",
       "three/addons/": "./vendor/",
-      "./app.js": "./app.js?v=32-birthplace-completion",
+      "./app.js": "./app.js?v=34-auto-solar-required",
+      "./api-client.js": "./api-client.js?v=34-auto-solar-required",
       "./date-controls.js": "./date-controls.js?v=32-birthplace-completion",
       "./detail-navigation.js": "./detail-navigation.js?v=32-birthplace-completion",
       "./site-shell.js": "./site-shell.js?v=32-birthplace-completion",
       "./mini-objects.js": "./mini-objects.js?v=32-birthplace-completion",
       "./sky-motion.js": "./sky-motion.js?v=32-birthplace-completion",
       "./reading-engine.js": "./reading-engine.js?v=32-birthplace-completion",
-      "./birthplace-time.js": "./birthplace-time.js?v=32-birthplace-completion",
+      "./birthplace-time.js": "./birthplace-time.js?v=34-auto-solar-required",
       "./phone-utils.js": "./phone-utils.js?v=32-birthplace-completion",
-      "./join.js": "./join.js?v=32-birthplace-completion",
+      "./join.js": "./join.js?v=34-auto-solar-required",
       "./meetup-dialog.js": "./meetup-dialog.js?v=32-birthplace-completion",
       "./day-pillar.js": "./day-pillar.js?v=32-birthplace-completion",
       "./reading-detail.js": "./reading-detail.js?v=32-birthplace-completion",
       "./text-layout.js": "./text-layout.js?v=32-birthplace-completion",
-      "./reading-records.js": "./reading-records.js?v=32-birthplace-completion",
+      "./reading-records.js": "./reading-records.js?v=34-auto-solar-required",
       "./mapping-explanation.js": "./mapping-explanation.js?v=32-birthplace-completion",
       "./manse-view.js": "./manse-view.js?v=32-birthplace-completion",
       "./report-format.js": "./report-format.js?v=32-birthplace-completion",
@@ -50,7 +51,7 @@
   }</script>
   <script src="./vendor/lunar.js" defer></script>
   <script src="./vendor/iztro.min.js" defer></script>
-  <script type="module" src="./app.js?v=32-birthplace-completion"></script>
+  <script type="module" src="./app.js?v=34-auto-solar-required"></script>
   <script type="module" src="./date-controls.js?v=32-birthplace-completion"></script>
   <script type="module" src="./detail-navigation.js?v=32-birthplace-completion"></script>
   <script type="module" src="./site-shell.js?v=32-birthplace-completion"></script>
@@ -96,12 +97,12 @@
           <div class="field-row"><label class="field">태어난 날<input name="birthDate" type="date" min="1900-01-01" required aria-describedby="date-help"></label><label class="field calendar-field" hidden>달력 기준<select name="calendar"><option value="solar">양력</option><option value="lunar">음력</option></select></label></div>
           <p id="date-help" class="field-help">입력한 생년월일로 성향을 계산해요.</p>
           <label id="leap-field" class="check-field" hidden><input name="leapMonth" type="checkbox">음력 윤달에 태어났어요</label>
-          <div id="time-fields" hidden><label class="field">태어난 시간 <span id="time-optional" class="optional">모르면 비워두세요</span><input type="time" name="birthTime"></label><div id="saju-location-row" class="birth-context-row"><label id="gender-field" class="field" hidden><span id="gender-label">전통 명반 계산용 성별</span><select name="gender" aria-describedby="gender-help"><option value="">선택해 주세요</option><option value="female">여성</option><option value="male">남성</option></select></label><label id="birthplace-field" class="field" hidden>태어난 곳 <span class="optional">국내</span><select name="birthplaceId" aria-describedby="birthplace-help" disabled><option value="">선택 안 함</option></select></label></div><p id="gender-help" class="field-help">명반의 전통 계산 규칙에만 쓰며, 성격이나 성 정체성을 판단하지 않아요.</p><div id="birthplace-correction-field" hidden><label class="check-field birthplace-correction"><input type="checkbox" name="timeCorrection" value="local-mean-solar" disabled><span>출생지 기준 지역 평균태양시로 보정</span></label><p id="birthplace-help" class="field-help">국내 18개 대표 도시의 관측소 좌표를 지원해요. 도시를 고른 뒤 보정을 켤 수 있고, 목록에 없는 도시나 병원의 정확한 위치를 대신 계산하지는 않아요. 출생 당시 한국 표준시·서머타임을 반영하지만 균시차를 적용하는 진태양시는 아니에요. 출생지와 보정 설정은 기기 내 계산·로컬 PDF에서만 쓰고 입력 기록·이메일에는 추가하지 않아요.</p></div></div>
+          <div id="time-fields" hidden><label class="field">태어난 시간 <span id="time-optional" class="optional">모르면 비워두세요</span><input type="time" name="birthTime"></label><div id="saju-location-row" class="birth-context-row"><label id="gender-field" class="field" hidden><span id="gender-label">전통 명반 계산용 성별 · 필수</span><select name="gender" aria-describedby="gender-help" required disabled><option value="">선택해 주세요</option><option value="female">여성</option><option value="male">남성</option></select></label><label id="birthplace-field" class="field" hidden>태어난 곳 <span class="optional">국내</span><select name="birthplaceId" aria-describedby="birthplace-help" disabled><option value="">선택 안 함</option></select></label></div><p id="gender-help" class="field-help">명반의 전통 계산 규칙에만 쓰며, 성격이나 성 정체성을 판단하지 않아요.</p><div id="birthplace-correction-field" hidden><p id="birthplace-help" class="field-help">국내 18개 대표 도시의 관측소 좌표를 지원해요. 도시를 선택하면 지역 평균태양시 보정이 자동 적용돼요. 목록에 없는 도시나 병원의 정확한 위치를 대신 계산하지는 않아요. 출생 당시 한국 표준시·서머타임을 반영하지만 균시차를 적용하는 진태양시는 아니에요. 생시를 모르면 시각을 추정하지 않아요. 출생지와 보정 설정은 기기 내 계산·로컬 PDF에서만 쓰고 입력 기록·이메일에는 추가하지 않아요.</p></div></div>
           <p id="time-warning" class="field-help" hidden>자미두수는 입력한 현지 시각을 그대로 사용하며 출생지·시간대·서머타임·진태양시를 보정하지 않아요.</p>
-          <fieldset id="ziwei-report-fields" class="ziwei-report-fields" hidden disabled><legend>자미두수 풀이 설정</legend><details><summary>풀이 깊이·기준일 설정</summary><div class="ziwei-report-options">
-            <label class="field">풀이 깊이<select name="ziweiReportMode"><option value="QUICK">QUICK · 핵심</option><option value="STANDARD" selected>STANDARD · 기본 상담</option><option value="DEEP">DEEP · 근거까지 자세히</option></select></label>
-            <label class="field">특히 궁금한 영역<select name="ziweiFocus"><option value="all">전체</option><option value="career">직업·사업</option><option value="money">돈·생활 기반</option><option value="relationship">연애·인간관계</option><option value="wellbeing">건강·생활 리듬</option></select></label>
-            <label class="field">해석 기준일<input name="ziweiAsOf" type="date"><span class="field-help">기본은 오늘이에요. 비워 두어도 결과를 계산한 날을 기준으로 사용해요.</span></label>
+          <fieldset id="ziwei-report-fields" class="ziwei-report-fields" hidden disabled><legend>자미두수 풀이 설정 <span class="optional">필수</span></legend><details><summary>풀이 깊이·기준일 설정 · 필수</summary><div class="ziwei-report-options">
+            <label class="field">풀이 깊이 · 필수<select name="ziweiReportMode" required><option value="QUICK">QUICK · 핵심</option><option value="STANDARD" selected>STANDARD · 기본 상담</option><option value="DEEP">DEEP · 근거까지 자세히</option></select></label>
+            <label class="field">특히 궁금한 영역 · 필수<select name="ziweiFocus" required><option value="all">전체</option><option value="career">직업·사업</option><option value="money">돈·생활 기반</option><option value="relationship">연애·인간관계</option><option value="wellbeing">건강·생활 리듬</option></select></label>
+            <label class="field">해석 기준일 · 필수<input name="ziweiAsOf" type="date" required><span class="field-help">기본은 오늘이에요. 다른 날을 기준으로 보려면 날짜를 바꿔 주세요.</span></label>
             <p class="field-help">현재·다음 대운은 입력한 생년월일과 기준일로 자동 계산해요. 명반의 음력 연도와 세는나이(허세) 기준을 적용하며, 전환 경계는 인접 구간과 함께 보여드려요.</p>
             <p class="field-help">이 설정은 현재 풀이와 PDF에만 사용해요. DB 기록 항목에 추가하지 않으며, 입력하지 않은 직업·고민·사건은 추정하지 않아요.</p>
           </div></details></fieldset>
@@ -135,7 +136,7 @@
       <details><summary>세 가지 결과가 달라도 괜찮나요?</summary><p>네. 서로 다른 상징을 사용하므로 결과가 다를 수 있어요. 같은 입력에는 같은 규칙을 적용하며 무작위로 결과를 만들지는 않습니다.</p></details>
       <details><summary>내 정보는 언제 저장되나요?</summary><p>‘결과 보기 · 기록 저장’을 누르면 이름·휴대전화·양력 생년월일·선택 주제와 저장 안내 기록을 성향 체험 입력 기록 관리 목적으로 보관합니다. ‘저장 없이 결과만 보기’는 입력정보를 DB에 보내지 않습니다.</p><p>출생시간·성별·풀이 결과는 입력 기록에 저장하지 않으며 광고성 정보 수신 동의나 문자·전화 발송으로 처리하지 않습니다. 별도 모임 관심 신청 팝업는 자체 안내와 선택 항목을 따릅니다.</p><p>보관기간은 <span data-participant-retention>서버 설정 확인 전</span>이며, 운영자는 <span data-participant-operator>서버 설정 확인 전</span>입니다. 철회·삭제는 <span data-participant-contact>서버 설정 확인 전</span>로 요청할 수 있습니다.</p></details>
       <details><summary>이메일·문자는 바로 받을 수 있나요?</summary><p><span data-result-delivery-state>PDF 이메일 발송은 서비스 연결 상태를 확인한 뒤 열립니다.</span> PDF로 받기는 메일 신청 없이 바로 사용할 수 있습니다. 문자 발송은 준비 중이며, 모임 관심 신청만으로 결과 메일이나 문자가 발송되지는 않습니다.</p></details>
-      <details><summary>사주·자미두수는 어디까지 계산하나요?</summary><p>사주는 원국·십성·세운을, 생시와 계산용 성별이 있으면 대운의 시작과 기간도 계산합니다. 지원되는 국내 도시와 생시를 입력하면 지역 평균태양시 보정을 선택할 수 있고, 적용 시각과 기준은 계산 근거에 표시합니다. 균시차를 더한 진태양시는 아닙니다.</p><p>자미두수는 입력한 현지 시각을 그대로 사용해 출생 명반의 12궁과 별 배치를 보여줍니다. 출생지·시간대·서머타임은 추가 보정하지 않습니다. 시간·윤달·절기의 적용 범위는 계산 근거에 설명하며, 전통 상징 해석은 과학적 성격 진단이나 전문 감정이 아닙니다.</p></details>
+      <details><summary>사주·자미두수는 어디까지 계산하나요?</summary><p>사주는 원국·십성·세운을, 생시를 알면 계산용 성별에 따른 대운의 시작과 기간도 계산합니다. 계산용 성별은 필수이며, 지원되는 국내 도시와 생시를 입력하면 지역 평균태양시 보정이 자동 적용됩니다. 적용 시각과 기준은 계산 근거에 표시하며, 균시차를 더한 진태양시는 아닙니다.</p><p>자미두수는 입력한 현지 시각을 그대로 사용해 출생 명반의 12궁과 별 배치를 보여줍니다. 출생시간·계산용 성별·풀이 설정은 필수이며, 출생지·시간대·서머타임은 추가 보정하지 않습니다. 시간·윤달·절기의 적용 범위는 계산 근거에 설명하며, 전통 상징 해석은 과학적 성격 진단이나 전문 감정이 아닙니다.</p></details>
       <details class="motion-settings"><summary>화면 움직임 설정</summary><p>기기의 ‘동작 줄이기’ 설정을 따릅니다. 필요한 경우 아래에서 배경과 장식의 움직임을 직접 멈출 수 있어요.</p><button id="motion-toggle" class="motion-toggle" type="button" hidden>움직임 멈추기</button></details>
     </div></section>
   </main>

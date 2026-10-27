@@ -1,4 +1,5 @@
 import { validateOptionalPhone } from './phone-utils.js';
+import { publicApiFetch } from './api-client.js';
 
 const VERSION = 'reading-records-v1';
 export function recordConfigReady(config) {
@@ -29,7 +30,7 @@ export function prepareReadingRecord(values, config, solarDate, now = new Date()
   return { kind: 'ready', payload };
 }
 
-export function createReadingRecordController({ form, document: doc = document, request = fetch, uuid = () => crypto.randomUUID() }) {
+export function createReadingRecordController({ form, document: doc = document, request = publicApiFetch, uuid = () => crypto.randomUUID() }) {
   const $ = (id) => doc.getElementById(id);
   const buttons = [...form.querySelectorAll('button[type="submit"]')];
   const statuses = [$('reading-record-status'), $('result-record-status')];

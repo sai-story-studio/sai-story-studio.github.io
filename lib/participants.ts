@@ -5,7 +5,7 @@ import { getDb } from "@/db";
 import { participants, requestRateLimits } from "@/db/schema";
 import {
   csvCell, isRealBirthDate, jsonResponse, maskContact,
-  readSmallJson, requireAdmin, requireRecordId, requireSameOrigin, ServiceError,
+  readSmallJson, requireAdmin, requireRecordId, requireSameOrigin, requirePublicOrigin, ServiceError,
 } from "@/lib/service";
 
 export const PARTICIPANT_CONSENT_VERSION = "participants-v1";
@@ -207,7 +207,7 @@ async function participantRateLimit(request: Request, now: number): Promise<void
 }
 
 export async function createParticipant(request: Request): Promise<Response> {
-  requireSameOrigin(request);
+  requirePublicOrigin(request);
   const settings = await participantSettings();
   if (!settings.collectionEnabled || settings.retentionDays === null || settings.meetupDescription === null) {
     throw new ServiceError(503, "PARTICIPANTS_DISABLED", "현재 모임 참가 관심 신청은 운영 준비 중입니다. 아직 개인정보를 저장하지 않습니다.");

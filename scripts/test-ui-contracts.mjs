@@ -24,6 +24,8 @@ for (const file of fs.readdirSync(base).filter((name) => name.endsWith('.js'))) 
 const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8');
 const importMap = JSON.parse(html.match(/<script type="importmap">([\s\S]*?)<\/script>/)?.[1] || '{}').imports;
 const releaseQuery = '?v=32-birthplace-completion';
+const changedReleaseQuery = '?v=34-auto-solar-required';
+const changedModules = new Set(['./app.js', './api-client.js', './birthplace-time.js', './join.js', './reading-records.js']);
 const moduleEntries = [...html.matchAll(/<script type="module" src="(\.\/[^"?]+\.js)([^"]*)"/g)];
 assert.equal(moduleEntries.length, 7);
 assert.match(html, /href="\.\/style\.css\?v=32-birthplace-completion"/);
@@ -31,12 +33,13 @@ const visitedModules = new Set();
 function checkModuleRefresh(specifier) {
   if (specifier.startsWith('./vendor/') || visitedModules.has(specifier)) return;
   visitedModules.add(specifier);
-  assert.equal(importMap[specifier], `${specifier}${releaseQuery}`, `${specifier} must refresh with the same report release`);
+  const expectedQuery = changedModules.has(specifier) ? changedReleaseQuery : releaseQuery;
+  assert.equal(importMap[specifier], `${specifier}${expectedQuery}`, `${specifier} must refresh whenever its source changes`);
   const source = fs.readFileSync(path.resolve(base, specifier), 'utf8');
   for (const match of source.matchAll(/(?:\bfrom\s*|\bimport\s*\(\s*)['"](\.\/[^'"]+\.js)['"]/g)) checkModuleRefresh(match[1]);
 }
 for (const [, entry, query] of moduleEntries) {
-  assert.equal(query, releaseQuery, `${entry} entry must bypass the old browser cache`);
+  assert.equal(importMap[entry], `${entry}${query}`, `${entry} entry and import-map URL must identify the same cached module`);
   checkModuleRefresh(entry);
 }
 assert.ok(visitedModules.size >= 27, 'static, popup, detail navigation and lazy PDF/report dependencies are covered by the import map');
@@ -57,7 +60,7 @@ for (const phrase of ['태양궁', '여덟 글자와 오행', '12칸의 명반']
 const joinHtml = fs.readFileSync(path.join(base, 'join.html'), 'utf8');
 assert.match(joinHtml, /http-equiv="refresh" content="0;url=\.\/index\.html#meetup-registration"/);
 assert.ok(!joinHtml.includes('<form') && !joinHtml.includes('src="./join.js'), 'the old standalone signup page is only a compatibility redirect');
-assert.equal(importMap['./join.js'], `./join.js${releaseQuery}`);
+assert.equal(importMap['./join.js'], `./join.js${changedReleaseQuery}`);
 assert.equal(importMap['./meetup-dialog.js'], `./meetup-dialog.js${releaseQuery}`);
 assert.match(html, /<button[^>]*id="open-meetup-registration"[^>]*aria-controls="meetup-registration"/);
 assert.match(html, /<dialog id="meetup-registration"[^>]*aria-labelledby="meetup-dialog-title"/);
@@ -67,7 +70,8 @@ assert.match(html, /href="\.\/meetup-dialog\.css\?v=32-birthplace-completion"/);
 assert.ok(!html.match(/<input id="reading-phone"[^>]*>/)?.[0].includes('maxlength='), 'invalid pasted phone suffixes must not be silently truncated into a valid number');
 assert.ok(!html.match(/<input name="phone"[^>]*>/)?.[0].includes('maxlength='));
 assert.ok(app.includes("$('gender-field').hidden = !traditional"));
-assert.ok(app.includes("form.elements.gender.required = mode === 'ziwei'"));
+assert.ok(app.includes('form.elements.gender.required = traditional'));
+assert.ok(app.includes('form.elements.gender.disabled = !traditional'));
 assert.ok(app.includes("gender: mode !== 'zodiac' ? form.elements.gender.value || null : null"));
 assert.ok(app.includes('buildMappingExplanation(result)') && app.includes('renderMappingExplanation(mapping)'));
 assert.ok(app.includes("section.id === 'saju-da-yun' && section.table"));
@@ -232,7 +236,9 @@ assert.ok(app.includes("$('ziwei-report-fields').hidden = mode !== 'ziwei'") && 
 assert.ok(app.includes("...(mode === 'ziwei' ? { ziweiReport: {"));
 assert.doesNotMatch(app, /ziweiCurrentAge|ziweiBoundary/);
 for (const [property, field] of [['mode', 'ziweiReportMode'], ['focus', 'ziweiFocus'], ['asOf', 'ziweiAsOf']]) assert.ok(app.includes(`${property}: form.elements.${field}.value`));
-assert.ok(app.includes('asOf: form.elements.ziweiAsOf.value || null'), 'clearing the optional date falls back to the frozen calculation date, never an unknown visitor age');
+assert.ok(app.includes('asOf: form.elements.ziweiAsOf.value,'), 'Ziwei requires a report date instead of silently falling back after it is cleared');
+assert.ok(app.includes('requireReadingFields(mode)'));
+for (const field of ['ziweiReportMode', 'ziweiFocus', 'ziweiAsOf']) assert.match(reportFields[2], new RegExp(`name="${field}"[^>]*\\brequired\\b`));
 assert.ok(app.includes('reportBlocks(body)') && app.includes('section.highlights') && app.includes("'report-keypoint'"));
 assert.equal(declaration(cssTree, '.reading-detail-section .report-paragraph .report-keypoint', 'font-weight'), '750');
 assert.equal(declaration(cssTree, '.reading-detail-section .report-paragraph .report-block + .report-block', 'margin-top'), '17px');

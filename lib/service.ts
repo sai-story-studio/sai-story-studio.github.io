@@ -6,6 +6,7 @@ import { getDb } from "@/db";
 import { readingRequests, requestRateLimits } from "@/db/schema";
 import { validateReadingPdfDocument } from "@/public/experience/reading-pdf-document.js";
 import { buildPdfEmail, sendPdfEmail } from "@/lib/pdf-mail";
+import { isAllowedPublicOrigin } from "@/lib/public-origin";
 
 export const CONSENT_VERSION = "2026-10-23-result-pdf-v2";
 export const RESULT_PURPOSE = "요청한 성향 결과·상세 풀이 PDF의 저장 및 이메일 전달";
@@ -51,6 +52,12 @@ export function requireSameOrigin(request: Request): void {
   const origin = request.headers.get("origin");
   if (!origin || origin === "null" || origin !== new URL(request.url).origin) {
     throw new ServiceError(403, "ORIGIN_REQUIRED", "같은 사이트에서 보낸 요청만 처리할 수 있습니다.");
+  }
+}
+
+export function requirePublicOrigin(request: Request): void {
+  if (!isAllowedPublicOrigin(request)) {
+    throw new ServiceError(403, "ORIGIN_REQUIRED", "허용된 사이트에서 보낸 공개 신청만 처리할 수 있습니다.");
   }
 }
 
@@ -280,7 +287,7 @@ async function enforceRateLimit(request: Request, recipient: string, now: number
 }
 
 export async function createRequest(request: Request): Promise<Response> {
-  requireSameOrigin(request);
+  requirePublicOrigin(request);
   const settings = getCollectionSettings();
   if (!settings.enabled || settings.retentionDays === null) {
     throw new ServiceError(503, "COLLECTION_DISABLED", "현재 결과 전달 신청은 운영 준비 중입니다. 결과는 화면에서 확인할 수 있습니다.");

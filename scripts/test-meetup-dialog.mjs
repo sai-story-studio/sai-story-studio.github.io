@@ -151,7 +151,7 @@ await test('static contract has unique IDs, independent form, cached entries, sc
   assert.match(html,/id="open-meetup-registration"[^>]*aria-haspopup="dialog"/);
   assert.equal((html.match(/<script type="module"/g)||[]).length,7);
   assert.match(html,/meetup-dialog\.js\?v=32-birthplace-completion/);assert.match(html,/meetup-dialog\.css\?v=32-birthplace-completion/);assert.match(html,/detail-themes\.css\?v=33-banner-weight/);
-  assert.match(html,/"\.\/join\.js": "\.\/join\.js\?v=32-birthplace-completion"/);assert.doesNotMatch(html,/href="\.\/join\.html"/);
+  assert.match(html,/"\.\/join\.js": "\.\/join\.js\?v=34-auto-solar-required"/);assert.doesNotMatch(html,/href="\.\/join\.html"/);
   assert.doesNotMatch(legacy,/<form|join\.js|participants\.css/);assert.match(legacy,/location\.replace\('\.\/index\.html#meetup-registration'\)/);assert.doesNotMatch(legacy,/location\.search|location\.href/);
   assert.match(css,/sai-sky-gathering\.png/);assert.match(css,/position: sticky/);assert.match(css,/overflow: auto/);assert.match(css,/93dvh/);
   assert.doesNotMatch(js+join,/innerHTML|localStorage|sessionStorage|sendBeacon|URLSearchParams|reading-form['"]|reading-phone|currentReading|currentInput/);
